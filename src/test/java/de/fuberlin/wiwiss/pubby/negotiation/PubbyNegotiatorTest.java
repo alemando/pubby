@@ -76,8 +76,28 @@ public class PubbyNegotiatorTest extends TestCase {
 						"Version/3.0.3 Safari/522.12.1").getMediaType());
 	}
 	
+	public void testPlainMSIE7GetsHTML() {
+		// MSIE (7.0) sends either */*, or */* with a list of other random types,
+		// but always without q values, so it doesn't provide any basis for
+		// actual negotiation. We will simply send HTML to MSIE, no matter what.
+	assertEquals("text/html",
+			negotiator.getBestMatch("*/*", 
+					"Mozilla/5.0 (Windows; U; MSIE 7.0; Windows NT 6.0; en-US)").getMediaType());
+	}
+
+	public void testCompatibleMSIE7GetsHTML() {
+			// MSIE (7.0) sends either */*, or */* with a list of other random types,
+			// but always without q values, so it doesn't provide any basis for
+			// actual negotiation. We will simply send HTML to MSIE, no matter what.
+	assertEquals("text/html",
+			negotiator.getBestMatch("*/*", 
+											"Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; SLCC2; " +
+											".NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729;" + 
+											"Media Center PC 6.0; .NET4.0C; .NET4.0E)").getMediaType());
+	}
+
 	public void testAcceptEverythingGetsHTML() {
-		assertEquals("text/html", negotiator.getBestMatch("*/*").getMediaType());
+		assertEquals("application/x-turtle", negotiator.getBestMatch("*/*").getMediaType());
 	}
 	
 	public void testFirefox3GetsHTML() {

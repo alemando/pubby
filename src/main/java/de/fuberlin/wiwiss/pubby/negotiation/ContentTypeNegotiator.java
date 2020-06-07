@@ -43,11 +43,19 @@ public class ContentTypeNegotiator {
 		this.userAgentOverrides.add(new AcceptHeaderOverride(
 				userAgentString, originalAcceptHeader, newAcceptHeader));
 	}
-	
+
+	 /**
+	 * Get best match for accept and null header. 
+	 * Best match is LAST match.
+	 */
 	public MediaRangeSpec getBestMatch(String accept) {
 		return getBestMatch(accept, null);
 	}
 	
+	/**
+	 * Get best match for accept or user agent header. 
+	 * Best match is LAST match.
+	 */
 	public MediaRangeSpec getBestMatch(String accept, String userAgent) {
 		if (userAgent == null) {
 			userAgent = "";
